@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="ProjectA_B_UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProjectA_B_UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:ProjectA_B_UWP.Models" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="Assets/UWP Image.jpg" Opacity="0.1"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+                <TextBlock Text="Project AB v1.0" FontSize="28"  HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- Updated: Use a Grid to position SportPanel and ContingentPanel side by side -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel x:Name="SportPanel" Grid.Column="0" Margin="12,0,12,0">
+                        <TextBlock Text="Athlete By Sport:" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="SportCombo" HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            DisplayMemberPath="Name"
+                            SelectionChanged="SportCombo_SelectionChanged"
+                            Margin="0,0,0,6" PlaceholderText=" - All Sports" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="ContingentPanel" Grid.Column="1" Margin="12,0,12,0">
+                        <TextBlock Text="Athlete By Contingent:" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="ContingentCombo" HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            DisplayMemberPath="Name"
+                            SelectionChanged="ContingentCombo_SelectionChanged"
+                            Margin="0,0,0,6" PlaceholderText=" - All Contingents" />
+                    </StackPanel>
+                </Grid>
+
+                <GridView Name="athleteList" Margin="30,0,0,0" Grid.Row="1"
+                      IsItemClickEnabled="True"
+                      ItemClick="athleteGridView_ItemClick">
+                    <GridView.ItemTemplate>
+                        <DataTemplate  x:DataType="data:Athlete">
+                            <StackPanel Width="300">
+                                <TextBlock Text="{x:Bind FormalName}" 
+                                      FontSize="24"/>
+                                <TextBlock Text="{x:Bind Age}" 
+                                      FontSize="14" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+            <ProgressRing x:Name="progRing" Grid.Row="1" Width="60" Height="60" />
+            <RelativePanel Grid.Row="2">
+                <Button x:Name="btnRefresh" Content="Refresh" RelativePanel.AlignLeftWithPanel="False"
+                    Click="btnRefresh_Click" Margin="6,6,6,6" />
+                <Button x:Name="btnAdd" Content="Add Athlete" 
+		            RelativePanel.AlignHorizontalCenterWithPanel="True"
+                            Click="btnAdd_Click" Margin="6,6,6,6" />
+            </RelativePanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
